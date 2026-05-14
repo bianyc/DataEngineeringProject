@@ -1,4 +1,4 @@
-# DataAnalytics
+# DataEngineeringProject
 
 End-to-end Azure Databricks Data Engineering project using PySpark, Spark SQL, Delta Lake, Delta Live Tables, Structured Streaming, Unity Catalog, and Azure Data Lake Storage Gen2.
 
