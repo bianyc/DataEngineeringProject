@@ -1,0 +1,24 @@
+USE CATALOG pricing_analytics;
+
+CREATE SCHEMA IF NOT EXISTS bronze;
+CREATE TABLE IF NOT EXISTS bronze.daily_pricing(
+  DATE_OF_PRICING STRING,
+  ROW_ID STRING,
+  STATE_NAME STRING,
+  MARKET_NAME STRING,
+  PRODUCTGROUP_NAME STRING,
+  PRODUCT_NAME STRING,
+  VARIETY STRING,
+  ORIGIN STRING,
+  ARRIVAL_IN_TONNES STRING,
+  MINIMUM_PRICE STRING,
+  MAXIMUM_PRICE STRING,
+  MODAL_PRICE STRING,
+  source_file_load_date TIMESTAMP
+)
+USING CSV
+OPTIONS (
+  header = 'true',
+  delimiter = ','
+)
+LOCATION 'abfss://bronze@adldatalakehouseyubai.dfs.core.windows.net/daily-pricing';
