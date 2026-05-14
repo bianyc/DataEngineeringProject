@@ -1,25 +1,78 @@
 # DataAnalytics
 
-Cloud-based end-to-end Data Engineering project built with Azure Databricks, PySpark, Delta Lake, and Azure Data Lake Storage following the Medallion Architecture design pattern.
+End-to-end Azure Databricks Data Engineering project using PySpark, Spark SQL, Delta Lake, Delta Live Tables, Structured Streaming, Unity Catalog, and Azure Data Lake Storage Gen2.
 
-This project demonstrates how to build scalable batch and streaming data pipelines for analytical reporting using modern Lakehouse technologies.
+This repository demonstrates a cloud-based Lakehouse data engineering workflow following the Medallion Architecture pattern: Bronze, Silver, and Gold layers.
 
 ---
 
 ## Project Overview
 
-This repository contains multiple Azure Databricks and PySpark projects covering:
+This project simulates a real-world data engineering solution for ingesting, transforming, storing, and serving analytical data using Azure Databricks.
+
+The project covers:
 
 - Batch data ingestion
-- Streaming data processing
-- Delta Lake implementation
-- Delta Live Tables (DLT)
-- Spark SQL transformations
-- Performance optimization
-- Medallion Architecture
-- Cloud-based analytics workflows
+- API and JSON data processing
+- Database source ingestion
+- PySpark transformations
+- Spark SQL analytics
+- Delta Lake table management
+- Delta Live Tables pipelines
+- Structured Streaming pipelines
+- Performance tuning
+- Unity Catalog and Azure resource setup
+- GitHub-based version control and CI/CD preparation
 
-The project simulates real-world data engineering scenarios using Azure Databricks and modern Lakehouse architecture principles.
+---
+
+## Architecture
+
+### Lakehouse / Medallion Architecture
+
+```text
+Source Systems
+    |
+    |-- APIs
+    |-- JSON Files
+    |-- SQL Database Tables
+    |-- Streaming Sources
+    |
+    v
+Bronze Layer
+Raw data ingestion
+    |
+    v
+Silver Layer
+Cleaned, validated, and transformed data
+    |
+    v
+Gold Layer
+Business-ready reporting tables
+    |
+    v
+Analytics / BI / Reporting
+```
+
+The solution separates raw, cleaned, and business-ready data into different layers to improve scalability, maintainability, and analytical usability.
+
+---
+
+## Project Screenshots
+
+### Delta Live Tables Pipeline
+
+![Delta Live Tables Pipeline](screenshots/Pipelines/01-Delta-Live-Tables-Introduction--Pipeline-1.png)
+
+### Unity Catalog and Databricks Environment
+
+![Unity Catalog](screenshots/catalog/catalog-1.png)
+
+### Databricks Job Workflow
+
+![Databricks Job Workflow](screenshots/jobs/Job-Transform-and-Load-Reporting-Tables-1.png)
+
+More screenshots are available in the [`screenshots`](screenshots/) folder.
 
 ---
 
@@ -28,59 +81,16 @@ The project simulates real-world data engineering scenarios using Azure Databric
 | Category | Technologies |
 |---|---|
 | Cloud Platform | Microsoft Azure |
+| Data Platform | Azure Databricks |
 | Data Processing | PySpark, Spark SQL |
-| Data Lakehouse | Delta Lake |
+| Lakehouse Storage | Delta Lake |
 | Streaming | Spark Structured Streaming |
-| Data Governance | Unity Catalog |
 | ETL Framework | Delta Live Tables |
-| Storage | Azure Data Lake Storage Gen2 |
-| Version Control | Git & GitHub |
-| CI/CD | GitHub Actions |
-| Notebook Platform | Azure Databricks |
-
----
-
-## Architecture
-
-### Medallion Architecture
-
-```text
-                +------------------+
-                |   Source Systems |
-                |------------------|
-                | APIs             |
-                | JSON Files       |
-                | Database Tables  |
-                | Streaming Data   |
-                +---------+--------+
-                          |
-                          v
-                +------------------+
-                |  Bronze Layer    |
-                | Raw Ingestion    |
-                +---------+--------+
-                          |
-                          v
-                +------------------+
-                |  Silver Layer    |
-                | Cleaned &        |
-                | Transformed Data |
-                +---------+--------+
-                          |
-                          v
-                +------------------+
-                |   Gold Layer     |
-                | Business-ready   |
-                | Reporting Tables |
-                +---------+--------+
-                          |
-                          v
-                +------------------+
-                | Analytics & BI   |
-                +------------------+
-```
-
-The solution follows the Databricks Lakehouse architecture using Bronze, Silver, and Gold layers for scalable and maintainable data engineering workflows.
+| Data Governance | Unity Catalog |
+| Cloud Storage | Azure Data Lake Storage Gen2 |
+| Version Control | Git, GitHub |
+| CI/CD Preparation | GitHub Actions |
+| Development Environment | Databricks Notebooks |
 
 ---
 
@@ -90,67 +100,122 @@ The solution follows the Databricks Lakehouse architecture using Bronze, Silver,
 DataAnalytics/
 │
 ├── 01-Ingestion/
+│   └── Data ingestion notebooks and source loading logic
+│
 ├── 02-Transform/
+│   └── Data transformation and loading logic
+│
 ├── Delta-Live-Table/
+│   └── Delta Live Tables pipeline implementation
+│
 ├── Performance-Tuning/
+│   └── Spark and Delta performance optimization examples
+│
 ├── Pyspark-Introduction/
+│   └── PySpark fundamentals and DataFrame operations
+│
 ├── Spark-Structured-Streaming-Introduction/
+│   └── Structured Streaming examples and checkpointing logic
+│
 ├── SparkSQL-Introduction/
+│   └── Spark SQL examples and analytical queries
+│
 ├── sql/
+│   └── SQL scripts for table creation and data processing
+│
 ├── screenshots/
+│   └── Project screenshots, pipeline images, job workflows, and Azure setup evidence
+│
 ├── .github/
+│   └── GitHub workflow / CI-CD related configuration
+│
 └── README.md
 ```
 
 ---
 
-## Key Features
+## Main Components
 
-### Data Ingestion
+### 1. Data Ingestion
 
-- API data ingestion
-- JSON file ingestion
-- Database ingestion
-- Incremental loading
-- Auto Loader implementation
+The ingestion layer includes examples of loading data from multiple source types, including APIs, JSON files, and database tables.
 
-### Data Transformation
+Key concepts:
+
+- Reading data from external sources
+- Writing raw data into the Bronze layer
+- Managing source-to-target ingestion workflows
+- Handling structured and semi-structured data
+
+---
+
+### 2. Data Transformation
+
+The transformation layer focuses on cleaning, reshaping, and enriching raw data for analytical use.
+
+Key concepts:
 
 - PySpark DataFrame transformations
 - Spark SQL queries
-- Data cleansing
-- Data enrichment
-- Aggregation pipelines
+- Joins and aggregations
+- Data type handling
+- Business-ready table preparation
 
-### Delta Lake
+---
+
+### 3. Delta Lake
+
+Delta Lake is used as the core storage layer for reliable Lakehouse data management.
+
+Key concepts:
 
 - Delta table creation
-- MERGE operations
 - ACID transactions
+- MERGE operations
+- Upserts
 - Time travel
-- Partition optimization
+- Partitioning and optimization
 
-### Structured Streaming
+---
 
-- Real-time data ingestion
-- Streaming checkpoints
+### 4. Delta Live Tables
+
+Delta Live Tables is used to build declarative ETL pipelines in Databricks.
+
+Key concepts:
+
+- DLT tables and views
+- Streaming tables
+- Data quality expectations
+- Pipeline execution
+- Automated dependency management
+
+---
+
+### 5. Structured Streaming
+
+The project includes Spark Structured Streaming examples for real-time or near-real-time data processing.
+
+Key concepts:
+
+- Streaming reads and writes
+- Checkpoint locations
 - Incremental processing
 - Stream-to-Delta pipelines
 
-### Delta Live Tables (DLT)
+---
 
-- Declarative ETL pipelines
-- Materialized views
-- Streaming tables
-- Data quality expectations
+### 6. Performance Tuning
 
-### Performance Optimization
+Performance tuning examples are included to improve the efficiency of Spark workloads.
 
-- Query tuning
-- Caching strategies
-- File optimization
+Key concepts:
+
+- Query optimization
+- Caching
 - Partition pruning
-- Cluster optimization
+- Delta optimization
+- Cluster resource awareness
 
 ---
 
@@ -158,73 +223,74 @@ DataAnalytics/
 
 This project demonstrates practical implementation of:
 
-- Medallion Architecture
 - Lakehouse Architecture
-- ETL / ELT Pipelines
-- Batch Processing
-- Streaming Processing
-- Incremental Loading
-- Change Data Capture (CDC)
-- Data Governance
-- Workflow Orchestration
-- Performance Tuning
+- Medallion Architecture
+- Batch ETL / ELT pipelines
+- Streaming data processing
+- Incremental data loading
+- Delta Lake table management
+- Data quality checks
+- Workflow orchestration
+- Spark performance optimization
+- Cloud-based data engineering development
 
 ---
 
-## CI/CD
+## Business Relevance
 
-GitHub Actions workflows are configured under:
+This project is designed to demonstrate how modern data engineering pipelines can support analytical reporting and business decision-making.
 
-```text
-.github/
-```
+The same architecture pattern can be applied to use cases such as:
 
-The repository integrates GitHub version control with Databricks development workflows for collaborative engineering and deployment management.
-
----
-
-## Screenshots
-
-Project screenshots and architecture diagrams are stored in:
-
-```text
-screenshots/
-```
+- Pricing analytics
+- Supply chain analytics
+- Inventory reporting
+- Financial reporting
+- Operational dashboards
+- Data quality monitoring
 
 ---
 
 ## Learning Outcomes
 
-Through this project, the following engineering skills were developed:
+Through this project, I developed hands-on experience in:
 
-- Building scalable data pipelines using PySpark
-- Implementing Lakehouse architecture in Azure Databricks
-- Developing streaming and batch ETL workflows
-- Managing Delta Lake tables
-- Using Unity Catalog for governance
-- Implementing Delta Live Tables pipelines
-- Optimizing Spark workloads
-- Managing cloud-based analytics environments
+- Building scalable data pipelines with Azure Databricks
+- Using PySpark for data engineering workloads
+- Designing Bronze, Silver, and Gold data layers
+- Implementing Delta Lake tables
+- Creating Delta Live Tables pipelines
+- Processing streaming data with Structured Streaming
+- Managing Databricks jobs and pipeline workflows
+- Organizing a data engineering project in GitHub
+- Documenting cloud project artifacts for portfolio use
 
 ---
 
 ## Future Improvements
 
-Potential future enhancements include:
+Potential future enhancements:
 
-- Azure Data Factory orchestration
-- Power BI dashboard integration
-- Terraform infrastructure deployment
-- Advanced monitoring and alerting
-- Automated testing framework
-- Production-grade CI/CD pipelines
+- Add Azure Data Factory orchestration
+- Add Power BI reporting layer
+- Add Terraform infrastructure-as-code setup
+- Add automated testing for data quality
+- Add more production-style GitHub Actions workflows
+- Add monitoring and alerting examples
+- Refactor notebooks into reusable Python modules
+
+---
+
+## Topics
+
+`azure-databricks` `pyspark` `delta-lake` `data-engineering` `spark-sql` `structured-streaming` `medallion-architecture`
 
 ---
 
 ## References
 
 - Azure Databricks
-- Microsoft Azure
 - Apache Spark
 - Delta Lake
 - Delta Live Tables
+- Microsoft Azure
